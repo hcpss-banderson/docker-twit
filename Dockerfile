@@ -1,5 +1,9 @@
 FROM ubuntu
 
+ENV TWIT_SOURCE=""
+ENV TWIT_DESTINATION=""
+ENV TWIT_PARAMS=""
+
 RUN buildDeps="wget" \
 	&& apt-get update \
 	&& apt-get install -y $buildDeps \
@@ -8,3 +12,7 @@ RUN buildDeps="wget" \
 	&& chmod a+x /usr/local/bin/twit \
 	&& apt-get remove -y $buildDeps \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
